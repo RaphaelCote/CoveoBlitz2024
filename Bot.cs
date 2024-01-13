@@ -32,13 +32,21 @@ public class Bot
         // You could find who's not doing anything and try to give them a job?
         var Crewmates = myShip.Crew
             .ToList();
-        
-         
+
+        var ValueMax = gameMessage.Constants.Ship.MaxShield;
+        double percentShield = (myShip.CurrentShield / ValueMax) * 100;
+
         /*
         Code pour le premier crewmate qui est le chef
         */
-        var Chef = Crewmates[0]; 
-        if((gameMessage.CurrentTickNumber%200) < 50)
+        var Chef = Crewmates[0];
+        if (percentShield < 50)
+        {
+            var distanceShield = Chef.DistanceFromStations.Shields;
+            var stationToMoveTo = distanceShield[Chef.DistanceFromStations.Shields.Count() - 1];
+            actions.Add(new CrewMoveAction(Chef.Id, stationToMoveTo.StationPosition));
+        }
+        else if ((gameMessage.CurrentTickNumber%200) < 50)
         {
             var distanceRadar = Chef.DistanceFromStations.Radars;
             var stationToMoveTo = distanceRadar[Chef.DistanceFromStations.Radars.Count()-1];
@@ -61,9 +69,8 @@ public class Bot
         Crewmate qui gere un fusil et le bouclier
         */
         var GunShield = Crewmates[1]; 
-        var ValueMax = gameMessage.Constants.Ship.MaxShield;
-        double percentShield = (myShip.CurrentShield/ValueMax)*100;
-        if(percentShield < 60)
+        
+        if(percentShield < 70)
         {
             var distanceShield = GunShield.DistanceFromStations.Shields;
             var stationToMoveTo = distanceShield[GunShield.DistanceFromStations.Shields.Count()-1];
@@ -82,15 +89,27 @@ public class Bot
         /*
         PEW PEW crew
         */
-        var Gun1 = Crewmates[2]; 
-        if(Gun1.CurrentStation == null)
+        var Gun1 = Crewmates[2];
+        if (percentShield < 50)
+        {
+            var distanceShield = Gun1.DistanceFromStations.Shields;
+            var stationToMoveTo = distanceShield[Gun1.DistanceFromStations.Shields.Count() - 1];
+            actions.Add(new CrewMoveAction(Gun1.Id, stationToMoveTo.StationPosition));
+        }
+        else if (Gun1.CurrentStation == null)
         {
             var distanceTurretGun1 = Gun1.DistanceFromStations.Turrets;
             var stationToMoveToGun1  = distanceTurretGun1 [Gun1.DistanceFromStations.Turrets.Count()-3];
             actions.Add(new CrewMoveAction(Gun1.Id, stationToMoveToGun1.StationPosition));
         }
-        var Gun2 = Crewmates[3]; 
-        if(Gun2.CurrentStation == null)
+        var Gun2 = Crewmates[3];
+        if (percentShield < 50)
+        {
+            var distanceShield = Gun2.DistanceFromStations.Shields;
+            var stationToMoveTo = distanceShield[Gun1.DistanceFromStations.Shields.Count() - 1];
+            actions.Add(new CrewMoveAction(Gun1.Id, stationToMoveTo.StationPosition));
+        }
+        else if (Gun2.CurrentStation == null)
         {
             var distanceTurretGun2 = Gun2.DistanceFromStations.Turrets;
             var stationToMoveToGun2  = distanceTurretGun2 [Gun2.DistanceFromStations.Turrets.Count()-4];

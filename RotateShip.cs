@@ -31,22 +31,17 @@ namespace Application
 
             //find if looking at enemy ship
             double targetAngle = Math.Asin((closestPos.Y - myShipPos.Y) / distanceBetween(myShipPos, closestPos));
-            //if(myShip.OrientationDegrees != targetAngle)
-            //{
-            Console.WriteLine("Crew going to station");
-            Station helmStation = myShip.Stations.Turrets.FirstOrDefault();
-
-            Action? moveAction = CrewMates.MoveClosestCrewToStation(gameMessage, helmStation);
-
-            if(moveAction != null)
+            if(myShip.OrientationDegrees != targetAngle)
             {
-                actions.Add(moveAction);
+                Station helmStation = myShip.Stations.Helms.FirstOrDefault();
+
+                Action? moveAction = CrewMates.MoveClosestCrewToStation(gameMessage, helmStation);
+
+                if(moveAction != null)
+                {
+                    actions.Add(moveAction);
+                }
             }
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Ship looking at enemy");
-            //}
 
             //permet de trouver un helm avec un crewmate
             var operatedHelmStation = myShip.Stations.Helms.Where(helmStation => helmStation.Operator != null).ToList();

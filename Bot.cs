@@ -70,7 +70,7 @@ public class Bot
         //{
         //    Console.WriteLine(action.Type);
         //}
-        Console.WriteLine(actions.Count);
+        Console.WriteLine("Action count : " + actions.Count);
         return actions;
     }
 }

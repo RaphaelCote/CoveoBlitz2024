@@ -32,29 +32,6 @@ public class Bot
             actions.Add(action);
         }
 
-        // Now crew members at stations should do something!
-        //var operatedTurretStations = myShip.Stations.Turrets.Where(turretStation => turretStation.Operator != null); //trouve les stations tourelles présentement peuplé
-        //foreach(var turretStation in operatedTurretStations)
-        //{
-        //    var switchAction = Random.Shared.Next(3);
-        //    //fait des actions aléatoire
-        //    switch(switchAction)
-        //    {
-        //        case 0:
-        //            // Charge the turret
-        //            actions.Add(new TurretChargeAction(turretStation.Id));
-        //            break;
-        //        case 1:
-        //            // Aim at the turret itself
-        //            actions.Add(new TurretLookAtAction(turretStation.Id, new Vector(gameMessage.Constants.World.Width * Random.Shared.NextDouble(), gameMessage.Constants.World.Width * Random.Shared.NextDouble())));
-        //            break;
-        //        case 2:
-        //            // Shoot!
-        //            actions.Add(new TurretShootAction(turretStation.Id));
-        //            break;
-        //    }
-        //}
-
         //code qui permet d'utiliser le radar
         //var operatedRadarStations = myShip.Stations.Radars.Where(radarStation => radarStation.Operator != null);
         //foreach(var radarStation in operatedRadarStations)
@@ -62,14 +39,6 @@ public class Bot
         //actions.Add(new RadarScanAction(radarStation.Id, otherShipsIds[Random.Shared.Next(otherShipsIds.Count)])); //Radar scan un des vaisseau ennemie sur l'écran de façon aléatoire
         //}
 
-        //ShootMeteor shootMeteor = new ShootMeteor();
-
-        //shootMeteor.ShowInfo(gameMessage);
-        // You can clearly do better than the random actions above. Have fun!!
-        //foreach(var action in actions)
-        //{
-        //    Console.WriteLine(action.Type);
-        //}
         Console.WriteLine("Action count : " + actions.Count);
         return actions;
     }

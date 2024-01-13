@@ -29,9 +29,12 @@ namespace Application
                 }
             }
 
+            var operatedHelmStations = myShip.Stations.Helms.Where(helm => helm.Operator != null).ToList();
+
             //find if looking at enemy ship
             double targetAngle = Math.Asin((closestPos.Y - myShipPos.Y) / distanceBetween(myShipPos, closestPos));
-            if(myShip.OrientationDegrees != targetAngle)
+
+            if(myShip.OrientationDegrees != targetAngle && operatedHelmStations.Count == 0)
             {
                 Station helmStation = myShip.Stations.Helms.FirstOrDefault();
 
@@ -41,6 +44,14 @@ namespace Application
                 {
                     actions.Add(moveAction);
                 }
+            }
+            else
+            {
+                Console.WriteLine(operatedHelmStations[0].Operator);
+                Crewmate helmCrew = myShip.Crew
+                    .Where(crewmate => crewmate.Id == operatedHelmStations[0].Operator)
+                    .FirstOrDefault();
+                actions.Add(new CrewMoveAction(helmCrew.Id, myShip.Stations.Turrets[0].WorldPosition));
             }
 
             //permet de trouver un helm avec un crewmate

@@ -83,56 +83,56 @@ namespace Application
         /// True : Action to move crew created
         /// False : Now idle crew, try liberating a crew from less important task
         /// </returns>
-        static public bool MoveClosestCrewToStationType(GameMessage gameMessage, Station station, out Action? moveAction)
-        {
-            var myShip = gameMessage.Ships[gameMessage.CurrentTeamId];
+        //static public bool MoveClosestCrewToStationType(GameMessage gameMessage, Station station, out Action? moveAction)
+        //{
+        //    var myShip = gameMessage.Ships[gameMessage.CurrentTeamId];
 
-            //All idle crewmates
-            List<Crewmate> idleCrewmates = myShip.Crew
-            .Where(crewmate => crewmate.CurrentStation == null && crewmate.Destination == null)
-            .ToList();
+        //    //All idle crewmates
+        //    List<Crewmate> idleCrewmates = myShip.Crew
+        //    .Where(crewmate => crewmate.CurrentStation == null && crewmate.Destination == null)
+        //    .ToList();
 
-            //Look for closer crew
-            if(idleCrewmates.Count > 0)
-            {
+        //    //Look for closer crew
+        //    if(idleCrewmates.Count > 0)
+        //    {
 
-                //Station stationToGo = myShip.Stations.
-                Crewmate closestCrew = idleCrewmates[0];
-                int crewmateDistance = -1;
-                foreach(var crewmate in idleCrewmates)
-                {
-                    List<DistanceFromStation> visitableStations = crewmate.DistanceFromStations.Shields
-                        .Concat(crewmate.DistanceFromStations.Turrets)
-                        .Concat(crewmate.DistanceFromStations.Helms)
-                        .Concat(crewmate.DistanceFromStations.Radars)
-                        .ToList();
+        //        //Station stationToGo = myShip.Stations.
+        //        Crewmate closestCrew = idleCrewmates[0];
+        //        int crewmateDistance = -1;
+        //        foreach(var crewmate in idleCrewmates)
+        //        {
+        //            List<DistanceFromStation> visitableStations = crewmate.DistanceFromStations.Shields
+        //                .Concat(crewmate.DistanceFromStations.Turrets)
+        //                .Concat(crewmate.DistanceFromStations.Helms)
+        //                .Concat(crewmate.DistanceFromStations.Radars)
+        //            .ToList();
 
-                    int distance = visitableStations
-                        .Where(distanceFromStation => distanceFromStation.StationId == station.Id)
-                        .FirstOrDefault()
-                        .Distance;
+        //        int distance = visitableStations
+        //            .Where(distanceFromStation => distanceFromStation.StationId == station.Id)
+        //            .FirstOrDefault()
+        //            .Distance;
 
-                    if(crewmateDistance == -1)
-                    {
-                        closestCrew = crewmate;
-                        crewmateDistance = distance;
-                    }
-                    else if(distance < crewmateDistance)
-                    {
-                        closestCrew = crewmate;
-                        crewmateDistance = distance;
-                    }
+        //        if(crewmateDistance == -1)
+        //        {
+        //            closestCrew = crewmate;
+        //            crewmateDistance = distance;
+        //        }
+        //        else if(distance < crewmateDistance)
+        //        {
+        //            closestCrew = crewmate;
+        //            crewmateDistance = distance;
+        //        }
 
-                }
+        //    }
 
-                moveAction = new CrewMoveAction(closestCrew.Id, station.GridPosition);
+        //    moveAction = new CrewMoveAction(closestCrew.Id, station.GridPosition);
 
-                return true;
-            }
+        //    return true;
+        //}
 
-            moveAction = null;
+        //moveAction = null;
 
-            return false;
-        }
+        //return false;
+        //}
     }
 }

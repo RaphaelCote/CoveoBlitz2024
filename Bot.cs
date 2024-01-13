@@ -48,6 +48,7 @@ public class Bot
         foreach(var turretStation in operatedTurretStations)
         {
             var switchAction = Random.Shared.Next(3);
+            //fait des actions aléatoire
             switch(switchAction)
             {
                 case 0:
@@ -65,6 +66,7 @@ public class Bot
             }
         }
 
+        //permet de trouver un helm avec un crewmate
         var operatedHelmStation = myShip.Stations.Helms.Where(helmStation => helmStation.Operator != null);
         foreach(var helmStation in operatedHelmStation)
         {

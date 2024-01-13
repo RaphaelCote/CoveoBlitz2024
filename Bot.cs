@@ -44,7 +44,7 @@ public class Bot
         }
 
         // Now crew members at stations should do something!
-        var operatedTurretStations = myShip.Stations.Turrets.Where(turretStation => turretStation.Operator != null);
+        var operatedTurretStations = myShip.Stations.Turrets.Where(turretStation => turretStation.Operator != null); //trouve les stations tourelles présentement peuplé
         foreach(var turretStation in operatedTurretStations)
         {
             var switchAction = Random.Shared.Next(3);

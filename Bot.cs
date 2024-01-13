@@ -114,6 +114,12 @@ public class Bot
         }
         else if (Gun2.CurrentStation == null)
         {
+            if(Gun2.DistanceFromStations.Turrets.Count() < 4)
+            {
+                var distanceTurretGun3 = Gun2.DistanceFromStations.Turrets;
+                var stationToMoveToGun3 = distanceTurretGun3[Gun2.DistanceFromStations.Turrets.Count() - 1];
+                actions.Add(new CrewMoveAction(Gun2.Id, stationToMoveToGun3.StationPosition));
+            }
             var distanceTurretGun2 = Gun2.DistanceFromStations.Turrets;
             var stationToMoveToGun2  = distanceTurretGun2 [Gun2.DistanceFromStations.Turrets.Count()-4];
             actions.Add(new CrewMoveAction(Gun2.Id, stationToMoveToGun2.StationPosition));

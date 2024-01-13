@@ -28,7 +28,6 @@ public class Bot
         var idleCrewmates = myShip.Crew
             .Where(crewmate => crewmate.CurrentStation == null && crewmate.Destination == null)
             .ToList();
-        //test
         foreach(var crewmate in idleCrewmates)
         {
             //trouve des stations qui sont disponibles et leurs distance au crewmate sélectionné

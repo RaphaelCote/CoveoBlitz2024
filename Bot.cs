@@ -35,13 +35,14 @@ public class Bot
 
         var ValueMax = gameMessage.Constants.Ship.MaxShield;
         double percentShield = (myShip.CurrentShield / ValueMax) * 100;
-
+        bool onShield = false;
         /*
         Code pour le premier crewmate qui est le chef
         */
         var Chef = Crewmates[0];
         if (percentShield < 50)
         {
+            onShield = true;
             var distanceShield = Chef.DistanceFromStations.Shields;
             var stationToMoveTo = distanceShield[Chef.DistanceFromStations.Shields.Count() - 1];
             actions.Add(new CrewMoveAction(Chef.Id, stationToMoveTo.StationPosition));
@@ -70,8 +71,9 @@ public class Bot
         */
         var GunShield = Crewmates[1]; 
         
-        if(percentShield < 70)
+        if(percentShield < 70 && !onShield)
         {
+            onShield = true;
             var distanceShield = GunShield.DistanceFromStations.Shields;
             var stationToMoveTo = distanceShield[GunShield.DistanceFromStations.Shields.Count()-1];
             actions.Add(new CrewMoveAction(GunShield.Id, stationToMoveTo.StationPosition));
@@ -90,8 +92,9 @@ public class Bot
         PEW PEW crew
         */
         var Gun1 = Crewmates[2];
-        if (percentShield < 50)
+        if (percentShield < 50 && !onShield)
         {
+            onShield = true;
             var distanceShield = Gun1.DistanceFromStations.Shields;
             var stationToMoveTo = distanceShield[Gun1.DistanceFromStations.Shields.Count() - 1];
             actions.Add(new CrewMoveAction(Gun1.Id, stationToMoveTo.StationPosition));
@@ -103,7 +106,7 @@ public class Bot
             actions.Add(new CrewMoveAction(Gun1.Id, stationToMoveToGun1.StationPosition));
         }
         var Gun2 = Crewmates[3];
-        if (percentShield < 50)
+        if (percentShield < 50 && !onShield)
         {
             var distanceShield = Gun2.DistanceFromStations.Shields;
             var stationToMoveTo = distanceShield[Gun1.DistanceFromStations.Shields.Count() - 1];

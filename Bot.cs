@@ -6,6 +6,9 @@ public class Bot
 {
     public const string NAME = "My cool C# bot";
 
+    Offense offense = new Offense();
+    bool doOnce = false;
+
     /// <summary>
     /// This method should be use to initialize some variables you will need throughout the game.
     /// </summary>
@@ -19,18 +22,29 @@ public class Bot
     /// </summary>
     public IEnumerable<Action> GetNextMoves(GameMessage gameMessage)
     {
-        var actions = new List<Action>();// liste d'action
-
-        var myShip = gameMessage.Ships[gameMessage.CurrentTeamId]; //information du vaisseau
-
-        var otherShipsIds = gameMessage.ShipsPositions.Where(ship => ship.Key != gameMessage.CurrentTeamId).ToList(); //infor vaisseau ennemi, est-ce que on a la position en partant?
-
-        List<Action> helmActions = RotateShip.RotateShipToEnemy(gameMessage);
-
-        foreach(var action in helmActions)
+        if(!doOnce)
         {
-            actions.Add(action);
+            doOnce = true;
+            offense.GetAllTurretsAvailable(gameMessage);
         }
+        var actions = new List<Action>();
+
+        var myShip = gameMessage.Ships[gameMessage.CurrentTeamId];
+        var otherShipsIds = gameMessage.ShipsPositions.Keys.Where(shipId => shipId != gameMessage.CurrentTeamId).ToList();
+
+        // You could find who's not doing anything and try to give them a job?
+        var idleCrewmates = myShip.Crew
+            .Where(crewmate => crewmate.CurrentStation == null && crewmate.Destination == null)
+            .ToList();
+
+        Station stationToMoveTo = offense.MoveStationWeapon();
+
+        if( stationToMoveTo != null )
+        {
+            actions.Add(new CrewMoveAction(idleCrewmates[0].Id, stationToMoveTo.GridPosition));
+        }
+        
+
 
         //code qui permet d'utiliser le radar
         //var operatedRadarStations = myShip.Stations.Radars.Where(radarStation => radarStation.Operator != null);

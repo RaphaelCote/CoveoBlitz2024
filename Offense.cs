@@ -71,27 +71,27 @@ namespace Application
             }
             MaxWeapon++;
 
-            if (NormalTurret.Count() > 0 && NormalTower == 0)
+            if (NormalTurret.Count() - NormalTower > 0 && NormalTower <= 1)
             {
                 NormalTower++;
                 station = NormalTurret[0];
             }
-            if (EMPTurret.Count() > 0 && EMPTower == 0)
+            if (EMPTurret.Count() - EMPTower > 0 && EMPTower <= 0)
             {
                 EMPTower++;
                 station = EMPTurret[0];
             }
-            if (FastTurret.Count() > 0 && FastTower == 0)
+            if (FastTurret.Count() - FastTower > 0 && FastTower <= 0)
             {
                 FastTower++;
                 station = FastTurret[0];
             }
-            if (CannonTurret.Count() > 0 && CannonTower == 0)
+            if (CannonTurret.Count() - CannonTower > 0 && CannonTower <= 0)
             {
                 CannonTower++;
                 station = CannonTurret[0];
             }
-            if (SniperTurret.Count() > 0 && SniperTower == 0)
+            if (SniperTurret.Count() - SniperTower > 0 && SniperTower <= 0)
             {
                 SniperTower++;
                 station = SniperTurret[0];

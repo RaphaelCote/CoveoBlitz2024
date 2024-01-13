@@ -26,8 +26,8 @@ public class Bot
         var idleCrewmates = myShip.Crew
             .Where(crewmate => crewmate.CurrentStation == null && crewmate.Destination == null)
             .ToList();
-
-        foreach (var crewmate in idleCrewmates)
+        //test
+        foreach(var crewmate in idleCrewmates)
         {
             var visitableStations = crewmate.DistanceFromStations.Shields
                 .Concat(crewmate.DistanceFromStations.Turrets)
@@ -36,16 +36,16 @@ public class Bot
                 .ToList();
 
             var stationToMoveTo = visitableStations[Random.Shared.Next(visitableStations.Count)];
-            
+
             actions.Add(new CrewMoveAction(crewmate.Id, stationToMoveTo.StationPosition));
         }
 
         // Now crew members at stations should do something!
         var operatedTurretStations = myShip.Stations.Turrets.Where(turretStation => turretStation.Operator != null);
-        foreach (var turretStation in operatedTurretStations)
+        foreach(var turretStation in operatedTurretStations)
         {
             var switchAction = Random.Shared.Next(3);
-            switch (switchAction)
+            switch(switchAction)
             {
                 case 0:
                     // Charge the turret
@@ -63,13 +63,13 @@ public class Bot
         }
 
         var operatedHelmStation = myShip.Stations.Helms.Where(helmStation => helmStation.Operator != null);
-        foreach (var helmStation in operatedHelmStation)
+        foreach(var helmStation in operatedHelmStation)
         {
             actions.Add(new ShipRotateAction(360 * Random.Shared.NextDouble()));
         }
 
         var operatedRadarStations = myShip.Stations.Radars.Where(radarStation => radarStation.Operator != null);
-        foreach (var radarStation in operatedRadarStations)
+        foreach(var radarStation in operatedRadarStations)
         {
             actions.Add(new RadarScanAction(radarStation.Id, otherShipsIds[Random.Shared.Next(otherShipsIds.Count)]));
         }

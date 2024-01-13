@@ -21,7 +21,7 @@ namespace Application
         /// True : Action to move crew created
         /// False : Now idle crew, try liberating a crew from less important task
         /// </returns>
-        static public bool MoveClosestCrewToStation(GameMessage gameMessage, Station station, out Action? moveAction)
+        static public Action? MoveClosestCrewToStation(GameMessage gameMessage, Station station)
         {
             var myShip = gameMessage.Ships[gameMessage.CurrentTeamId];
 
@@ -45,10 +45,15 @@ namespace Application
                         .Concat(crewmate.DistanceFromStations.Radars)
                         .ToList();
 
-                    int distance = visitableStations
-                        .Where(distanceFromStation => distanceFromStation.StationId == station.Id)
-                        .FirstOrDefault()
-                        .Distance;
+                    int distance = 0;
+                    foreach(var visitable in visitableStations)
+                    {
+                        if(visitable.StationId == station.Id)
+                        {
+                            distance = visitable.Distance;
+                            break;
+                        }
+                    }
 
                     if(crewmateDistance == -1)
                     {
@@ -60,17 +65,14 @@ namespace Application
                         closestCrew = crewmate;
                         crewmateDistance = distance;
                     }
-
                 }
 
-                moveAction = new CrewMoveAction(closestCrew.Id, station.GridPosition);
+                Action moveAction = new CrewMoveAction(closestCrew.Id, station.GridPosition);
 
-                return true;
+                return moveAction;
             }
 
-            moveAction = null;
-
-            return false;
+            return null;
         }
 
         /// <summary>

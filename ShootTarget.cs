@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application
 {
-    internal class ShootTarget
+    public class ShootTarget
     {
         int OffsetTicks = 0;
 

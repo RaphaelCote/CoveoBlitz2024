@@ -1,4 +1,6 @@
-﻿namespace Application;
+﻿using static System.Collections.Specialized.BitVector32;
+
+namespace Application;
 
 public class Bot
 {
@@ -17,6 +19,7 @@ public class Bot
     /// </summary>
     public IEnumerable<Action> GetNextMoves(GameMessage gameMessage)
     {
+        CrewMates.MoveClosestCrewToStation(gameMessage, , out Action? moveAction)
         var actions = new List<Action>();// liste d'action
 
         var myShip = gameMessage.Ships[gameMessage.CurrentTeamId]; //information du vaisseau
@@ -79,6 +82,9 @@ public class Bot
             actions.Add(new RadarScanAction(radarStation.Id, otherShipsIds[Random.Shared.Next(otherShipsIds.Count)])); //Radar scan un des vaisseau ennemie sur l'écran de façon aléatoire
         }
 
+        ShootMeteor shootMeteor = new ShootMeteor();
+
+        shootMeteor.ShowInfo(gameMessage);
         // You can clearly do better than the random actions above. Have fun!!
         return actions;
     }
